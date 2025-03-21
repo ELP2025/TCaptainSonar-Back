@@ -1,12 +1,13 @@
 import express from 'express';
 import connectDB from './db';
 import userRoutes from "./routes/userRoutes"
+import gameRoutes from "./routes/gameRoutes"
 
 const app = express();
 app.use(express.json());
 app.use('/api/users', userRoutes);
-
-connectDB();
+app.use('/api/games', gameRoutes);
+connectDB(); 
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
