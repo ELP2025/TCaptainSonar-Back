@@ -6,6 +6,6 @@ const gameSchema = new mongoose.Schema({
   status: { type: String, enum: ['ongoing', 'completed'], default: 'ongoing' },
 }, { timestamps: true });
 
-const Game = mongoose.model('User', gameSchema);
+const Game = mongoose.model('Game', gameSchema);
 
 export default Game;
