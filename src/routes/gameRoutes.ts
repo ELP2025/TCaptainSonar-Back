@@ -16,4 +16,28 @@ router.post('/', async (req, res) => {
 });
 
 
+router.get('/', async (req, res) => {
+    try {
+        const games = await Game.find({});
+        res.json(games);
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const game = await Game.findById(req.params.id);
+        if(!game) {
+            res.status(404).json({error : "partie non trouvée"});
+        }
+        else {
+            res.json(game);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+
+});
 export default router;
