@@ -1,7 +1,11 @@
 import express from 'express';
 import connectDB from './db';
+import userRoutes from "./routes/userRoutes"
 
 const app = express();
+app.use(express.json());
+app.use('/api/users', userRoutes);
+
 connectDB();
 const PORT = process.env.PORT || 3000;
 
