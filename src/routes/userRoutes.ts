@@ -72,6 +72,19 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
 
+        if (!deletedUser) {
+            res.status(404).json({ error: 'Utilisateur non trouvé' });
+        }
+        else {
+            res.json(deletedUser);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
 
 export default router;
