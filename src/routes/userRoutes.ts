@@ -43,5 +43,35 @@ router.get('/', async (req, res) => {
 });
 
 
+router.put('/:id', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        // Vérifie si le corps de la requête contient les données nécessaires
+        if (!username || !password) {
+            res.status(400).json({ error: 'Username et password sont requis' });
+        }
+        else {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Met à jour l'utilisateur
+            const updatedUser = await User.findByIdAndUpdate(
+                req.params.id,
+                { username, password: hashedPassword },
+                { new: true } // Retourne l'utilisateur mis à jour
+            );
+
+            if (!updatedUser) {
+                res.status(404).json({ error: 'Utilisateur non trouvé' });
+            }
+            else {
+                res.json(updatedUser);
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ error: error instanceof Error ? error.message : 'Une erreur inconnue est survenue' });
+    }
+});
+
+
 
 export default router;
