@@ -40,4 +40,30 @@ router.get('/:id', async (req, res) => {
     }
 
 });
+
+router.put('/:id', async (req, res) => {
+    try {
+        const {endDate, status } = req.body;
+        if (status && !['ongoing', 'completed'].includes(status)) {
+            res.status(400).json({ error: 'le status doit être ongoing ou completed' });
+          }
+        else {
+            const updatedGame = await Game.findByIdAndUpdate(
+                req.params.id,
+                { endDate, status},
+                {new: true}
+            )
+            if (!updatedGame) {
+                res.status(404).json({ error: 'partie non trouvé' });
+            }
+            else {
+                res.json(updatedGame);
+            }
+        };
+    }
+    catch (error) {
+        res.status(500).json({ error: error instanceof Error ? error.message : 'Une erreur inconnue est survenue' });
+    }
+});
+
 export default router;
