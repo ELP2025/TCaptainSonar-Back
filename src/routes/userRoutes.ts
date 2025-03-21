@@ -17,5 +17,31 @@ router.post('/', async (req, res) => {
     }
 });
 
-  
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id, '-password');
+
+        if (!user) {
+            res.status(404).json({ error: 'Utilisateur non trouvé' });
+        }
+        else {
+            res.json(user);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+
+router.get('/', async (req, res) => {
+    try {
+        const users = await User.find({}, '-password'); // Exclut les mots de passe
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+});
+
+
+
 export default router;
