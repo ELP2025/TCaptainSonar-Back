@@ -2,6 +2,17 @@ import express from 'express';
 import Performance from '../models/Performance';
 const router = express.Router();
 
+router.post('/', async (req, res) => {
+    try {
+        const { player, game, score, role } = req.body;      
+        console.log(player);
+        const performance = new Performance({player, game, score, role });
+        await performance.save();
+        res.status(201).json({ message: 'Performance créé avec succès', performance });
+      } catch (error) {
+        res.status(500).json({ error: error instanceof Error ? error.message : 'Erreur inconnue' });
+    }
+});
 
 router.get('/', async (req, res) => {
   try {
