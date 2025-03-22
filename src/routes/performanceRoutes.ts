@@ -51,4 +51,19 @@ router.get('/user/:userId', async (req, res) => {
   }
 })
 
+router.put('/:id', async (req, res) => {
+  try {
+      const updatedPerformance = await Performance.findByIdAndUpdate(
+          req.params.id,
+          { $set: req.body },
+          { new: true, runValidators: true }
+      );
+
+      res.json({ message: "Performance mise à jour avec succès", performance: updatedPerformance });
+  } catch (error) {
+      res.status(500).json({ error: error instanceof Error ? error.message : 'Erreur inconnue' });
+  }
+});
+
+
 export default router;
