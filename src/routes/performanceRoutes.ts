@@ -65,5 +65,13 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+      await Performance.findByIdAndDelete(req.params.id);
+      res.json({ message: "Performance supprimée avec succès" });
+  } catch (error) {
+      res.status(500).json({ error: error instanceof Error ? error.message : 'Erreur inconnue' });
+  }
+});
 
 export default router;
