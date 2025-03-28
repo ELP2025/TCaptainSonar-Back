@@ -7,7 +7,11 @@ router.post('/', async (req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-
+        const userExisting = await User.findOne({ username });
+        if (userExisting) {
+            res.status(400).json({ message: "Utilisateur déjà existant" });
+            return;
+        }
         const user = new User({ username, password: hashedPassword });
         await user.save();
 
