@@ -34,7 +34,12 @@ io.on('connection', (socket) => {
       console.log('Message reçu :', data);
       io.emit('message', `Serveur a reçu : ${data}`);
     });
-  
+    ////Communication sur le choix du rôle 
+    socket.on('role', (data) => {
+      console.log('Role sélectionné :', data);
+      io.emit('role', data);
+    });
+
     socket.on('disconnect', () => {
       console.log('Client déconnecté :', socket.id);
     });
