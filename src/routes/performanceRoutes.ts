@@ -34,22 +34,23 @@ router.get('/:id', async (req, res) => {
 
 router.get('/user/:userId', async (req, res) => {
   try {
-    const{userId}= req.params;
-    if(!userId) {
-      res.status(400).json({error: "l'ID de l'utilisateur est requis"});
+    const { userId } = req.params;
+    
+    if (!userId) {
+      res.status(400).json({ error: "L'ID de l'utilisateur est requis" });
+      return;
     }
 
-    //Populate permet de chercher toute la game, pas juste l'ID
-    const performances = await Performance.find({player:userId}).populate('game')
-    if(!performances.length) {
-      res.status(404).json({error:"Aucune partie trouvée pour l'utilisateur"})
-    }
-    res.json(performances);
+    const performances = await Performance.find({ player: userId }).populate('game');
+    
+    // Toujours retourner un tableau, même vide
+     res.json(performances || []); // ← Modification clé ici
+     return
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : 'Erreur inconnue' });
+    return;
   }
-  catch (error) {
-    res.status(500).json({ error: (error as Error).message });
-  }
-})
+});
 
 router.put('/:id', async (req, res) => {
   try {
