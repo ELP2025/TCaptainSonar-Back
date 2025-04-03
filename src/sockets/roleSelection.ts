@@ -13,7 +13,7 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
           socketId: socket.id // Maintenant ça correspond au type
         };
         const updatedRoles = roleService.handleRoleSelection(roomId, eventData);
-        io.to(roomId).emit('roles_update', updatedRoles);
+        io.emit('roles_update', updatedRoles);
         console.log('Envoi roles_update:', updatedRoles); // Debug backend
     });
 
