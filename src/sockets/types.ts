@@ -4,7 +4,7 @@ export interface RoleSelectionEvent {
     team: TeamType;
     role: string;
     action: 'select' | 'deselect';
-    socketId: string; // Ajoute cette ligne
+    socketId: string;
   }
 
 export interface RoomRoles {
