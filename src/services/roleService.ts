@@ -14,10 +14,7 @@ export class RoleService {
   
     if (data.action === 'select') {
       // Vérifie si le rôle est déjà pris dans n'importe quelle équipe
-      const isRoleTaken = 
-        this.roleSelections[roomId].blue.includes(data.role) || 
-        this.roleSelections[roomId].red.includes(data.role);
-  
+      const isRoleTaken = this.roleSelections[roomId][data.team].includes(data.role);
       if (!isRoleTaken) {
         this.roleSelections[roomId][data.team].push(data.role);
         console.log(this.roleSelections[roomId][data.team])
