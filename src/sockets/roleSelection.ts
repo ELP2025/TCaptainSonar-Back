@@ -27,7 +27,8 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
     });
 
     socket.on('game_start_signal', (data: TeamUpdate) => {
-      io.emit('game_start',); // Émission à toute la room
+      console.log("Partie lancée !!");
+      io.emit('game_start', "room1"); 
     });
 
     socket.on("getRole", () => {
