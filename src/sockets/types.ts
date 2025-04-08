@@ -1,4 +1,12 @@
 export type TeamType = 'blue' | 'red';
+interface Team {
+  Captain: string;
+}
+export interface TeamUpdate {
+  blue: Team;
+  red: Team;
+}
+// Définir une interface pour la structure globale du paquet JSON
 
 export interface RoleSelectionEvent {
     team: TeamType;
@@ -19,11 +27,3 @@ export interface RoomRoles {
   };
 }
 
-export type Team = {
-  Captain: string;
-};
-
-export type TeamUpdate = {
-  blue: Team;
-  red: Team;
-};
