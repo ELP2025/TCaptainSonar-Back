@@ -16,13 +16,12 @@ export class RoleService {
     playerId: string;
     socketId: string;
   }): RoomRoles[string] {
-    console.log(data);
     
     // Initialise la structure de la room si elle n'existe pas
     if (!this.roleSelections[roomId]) {
       this.roleSelections[roomId] = { 
-        blue: { captain: '' }, 
-        red: { captain: '' } 
+        blue: { captain: '', mecano: '' }, 
+        red: { captain: '', mecano: '' } 
       };
     }
 
@@ -50,12 +49,35 @@ export class RoleService {
           playerId: data.playerId
         });
       }
-      // Vous pouvez ajouter la gestion d'autres rôles ici si nécessaire
+      else if (data.role === 'Mecano') {
+        // Désélectionne l'ancien capitaine s'il y en avait un
+        if (room[data.team].mecano) {
+          this.cleanupPlayerRole(room[data.team].mecano, roomId, data.team, 'Mecano');
+        }
+        
+        // Assigner le nouveau capitaine
+        room[data.team].mecano = data.playerId;
+        
+        // Enregistrer le rôle du joueur
+        if (!this.playerRoles[data.socketId]) {
+          this.playerRoles[data.socketId] = [];
+        }
+        this.playerRoles[data.socketId].push({ 
+          roomId, 
+          team: data.team, 
+          role: data.role,
+          playerId: data.playerId
+        });
+      }
     } else {
       // Désélection
       if (data.role === 'Capitaine' && room[data.team].captain === data.playerId) {
         room[data.team].captain = '';
         this.cleanupPlayerRole(data.playerId, roomId, data.team, 'Capitaine');
+      }
+      else if (data.role === 'Mecano' && room[data.team].mecano === data.playerId) {
+        room[data.team].mecano = '';
+        this.cleanupPlayerRole(data.playerId, roomId, data.team, 'Mecano');
       }
       // Gestion d'autres rôles si nécessaire
     }
@@ -81,8 +103,8 @@ export class RoleService {
 
   getRoomRoles(roomId: string): RoomRoles[string] {
     return this.roleSelections[roomId] || { 
-      blue: { captain: '' }, 
-      red: { captain: '' } 
+      blue: { captain: '', mecano: '' }, 
+      red: { captain: '', mecano: '' } 
     };
   }
 

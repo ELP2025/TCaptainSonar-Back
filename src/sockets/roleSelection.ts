@@ -14,8 +14,8 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
         socketId: socket.id
       };
       const updatedRoles = roleService.handleRoleSelection(roomId, eventData);
+      console.log("UPDATED ROLE", updatedRoles)
       io.emit('teams_update', updatedRoles);
-      console.log('Envoi roles_update:', updatedRoles); // Debug backend
     });
 
     socket.on('disconnect', () => {
