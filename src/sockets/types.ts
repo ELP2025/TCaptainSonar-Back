@@ -1,6 +1,8 @@
 export type TeamType = 'blue' | 'red';
+
 interface Team {
   Captain: string;
+  Mecano:string;
 }
 export interface TeamUpdate {
   blue: Team;
@@ -19,10 +21,12 @@ export interface RoleSelectionEvent {
 export interface RoomRoles {
   [roomId: string]: {
     blue: {
-      captain:string 
+      captain:string,
+      mecano:string
      };
     red: {
-     captain:string 
+     captain:string,
+     mecano:string 
     };
   };
 }

@@ -14,8 +14,8 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
         socketId: socket.id
       };
       const updatedRoles = roleService.handleRoleSelection(roomId, eventData);
+      console.log("UPDATED ROLE", updatedRoles)
       io.emit('teams_update', updatedRoles);
-      console.log('Envoi roles_update:', updatedRoles); // Debug backend
     });
 
     socket.on('disconnect', () => {
@@ -27,8 +27,7 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
     });
 
     socket.on('game_start_signal', (data: TeamUpdate) => {
-      console.log("Partie lancée !!");
-      io.emit('game_start', "room1"); // Émission à toute la room
+      io.emit('game_start',); // Émission à toute la room
     });
 
     socket.on("getRole", () => {
