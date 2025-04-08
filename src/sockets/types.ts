@@ -12,12 +12,18 @@ export interface RoleSelectionEvent {
     team: TeamType;
     role: string;
     action: 'select' | 'deselect';
+    playerId:string
     socketId: string;
   }
 
 export interface RoomRoles {
   [roomId: string]: {
-    blue: string[];
-    red: string[];
+    blue: {
+      captain:string 
+     };
+    red: {
+     captain:string 
+    };
   };
 }
+

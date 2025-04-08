@@ -7,13 +7,14 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
     console.log('Client connecté :', socket.id);
 
     socket.on('role_selection', (data: Omit<RoleSelectionEvent, 'socketId'>) => {
+      
       const roomId = socket.data.roomId || 'default_room';
       const eventData: RoleSelectionEvent = {
         ...data,
         socketId: socket.id
       };
       const updatedRoles = roleService.handleRoleSelection(roomId, eventData);
-      io.emit('roles_update', updatedRoles);
+      io.emit('teams_update', updatedRoles);
       console.log('Envoi roles_update:', updatedRoles); // Debug backend
     });
 
@@ -22,7 +23,7 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
 
       roleService.cleanupOnDisconnect(socket.id);
       const updatedRoles = roleService.getRoomRoles("default_room");
-      io.emit('roles_update', updatedRoles); // Émission à toute la room
+      io.emit('teams_update', updatedRoles); // Émission à toute la room
     });
 
     socket.on('game_start_signal', (data: TeamUpdate) => {
@@ -33,7 +34,7 @@ export const setupRoleSockets = (io: Server, roleService: RoleService) => {
     socket.on("getRole", () => {
       const updatedRoles = roleService.getRoomRoles("default_room");
       console.log(updatedRoles)
-      io.emit('roles_update', updatedRoles); // Émission à toute la room
+      io.emit('teams_update', updatedRoles); // Émission à toute la room
     })
   });
 
