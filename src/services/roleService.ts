@@ -116,6 +116,9 @@ export class RoleService {
       if (room && role === 'Capitaine' && room[team].captain === playerId) {
         room[team].captain = '';
       }
+      if (room && role === 'Mecano' && room[team].mecano === playerId) {
+        room[team].mecano = '';
+      }
     });
 
     delete this.playerRoles[socketId];

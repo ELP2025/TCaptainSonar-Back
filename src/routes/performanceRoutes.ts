@@ -8,6 +8,8 @@ router.post('/', async (req, res) => {
         console.log(player);
         const performance = new Performance({player, game, score, role });
         await performance.save();
+        console.log(performance)
+        console.log("insertion dans performance")
         res.status(201).json({ message: 'Performance créé avec succès', performance });
       } catch (error) {
         res.status(500).json({ error: error instanceof Error ? error.message : 'Erreur inconnue' });

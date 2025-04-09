@@ -16,7 +16,7 @@ const performanceSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['Captain', 'First Mate', 'Radio Operator', 'Engineer'], // Limite aux rôles possibles
+        enum: ['Capitaine', 'First Mate', 'Radio Operator', 'Mecano'], // Limite aux rôles possibles
         required: true,
     }
 }, { timestamps: true });
